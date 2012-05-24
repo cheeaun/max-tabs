@@ -1,0 +1,15 @@
+{
+    "name": "max-tabs",
+    "license": "MPL 2.0",
+    "author": "Lim Chee Aun",
+    "version": "0.1",
+    "fullName": "Max Tabs",
+    "id": "maxtabs@cheeaun",
+    "description": "Set maximum number of opened tabs in a window.",
+    "preferences": [{
+	        "name": "maxTabs",
+	        "title": "Maximum number of tabs",
+	        "type": "integer",
+	        "value": 10
+	    }]
+}
