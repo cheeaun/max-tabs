@@ -6,10 +6,20 @@
     "fullName": "Max Tabs",
     "id": "maxtabs@cheeaun",
     "description": "Set maximum number of opened tabs in a window.",
-    "preferences": [{
+    "preferences": [
+        {
 	        "name": "maxTabs",
 	        "title": "Maximum number of tabs",
 	        "type": "integer",
 	        "value": 10
-	    }]
+	    }, {
+            "name": "maxPrivateBrowsing",
+            "title": "Works for Private Browsing",
+            "type": "bool",
+            "value": true
+        }
+    ],
+    "permissions": {
+        "private-browsing": true
+    }
 }
