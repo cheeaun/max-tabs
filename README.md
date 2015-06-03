@@ -15,3 +15,8 @@ Note: This repo does **NOT** rely on global install of [`jpm`](https://github.co
 - `npm install` - Install all dependencies
 - `npm start` - Run the extension on Firefox (stable) with a new temporary profile
 - `npm run package` - Package the extension into an XPI file
+
+License
+---
+
+[MPL 2.0](https://www.mozilla.org/MPL/2.0/).
