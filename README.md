@@ -16,6 +16,11 @@ Note: This repo does **NOT** rely on global install of [`jpm`](https://github.co
 - `npm start` - Run the extension on Firefox (stable) with a new temporary profile
 - `npm run package` - Package the extension into an XPI file
 
+Localization
+---
+
+[Help translate Max Tabs!](https://www.transifex.com/projects/p/max-tabs/)
+
 License
 ---
 
