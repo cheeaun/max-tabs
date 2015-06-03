@@ -1,25 +1,37 @@
 {
-    "name": "max-tabs",
-    "license": "MPL 2.0",
-    "author": "Lim Chee Aun",
-    "version": "0.2",
-    "fullName": "Max Tabs",
-    "id": "maxtabs@cheeaun",
-    "description": "Set maximum number of opened tabs in a window.",
-    "preferences": [
-        {
-	        "name": "maxTabs",
-	        "title": "Maximum number of tabs",
-	        "type": "integer",
-	        "value": 10
-	    }, {
-            "name": "maxPrivateBrowsing",
-            "title": "Works for Private Browsing",
-            "type": "bool",
-            "value": true
-        }
-    ],
-    "permissions": {
-        "private-browsing": true
+  "name": "max-tabs",
+  "license": "MPL 2.0",
+  "author": "Lim Chee Aun",
+  "version": "0.3.0",
+  "title": "Max Tabs",
+  "id": "maxtabs@cheeaun",
+  "description": "Set maximum number of opened tabs in a window.",
+  "preferences": [
+    {
+      "name": "maxTabs",
+      "title": "Maximum number of tabs",
+      "type": "integer",
+      "value": 10
+    },
+    {
+      "name": "maxPrivateBrowsing",
+      "title": "Works for Private Browsing",
+      "type": "bool",
+      "value": true
     }
+  ],
+  "permissions": {
+    "private-browsing": true,
+    "multiprocess": true
+  },
+  "dependencies": {
+    "chroma-js": "~0.7.4"
+  },
+  "devDependencies": {
+    "jpm": "~1.0.0"
+  },
+  "scripts": {
+    "start": "jpm run",
+    "package": "jpm xpi"
+  }
 }

@@ -10,6 +10,8 @@ Max Tabs is a simple Firefox extension that does these:
 Development
 ---
 
-	bin\activate (Windows) or source bin/activate (Bash)
-	cfx run
-	cfx xpi
+Note: This repo does **NOT** rely on global install of [`jpm`](https://github.com/mozilla/jpm). It's installed locally.
+
+- `npm install` - Install all dependencies
+- `npm start` - Run the extension on Firefox (stable) with a new temporary profile
+- `npm run package` - Package the extension into an XPI file
