@@ -18,6 +18,18 @@
       "title": "Works for Private Browsing",
       "type": "bool",
       "value": true
+    },
+    {
+      "name": "maxOpenInNextWindow",
+      "title": "Open in next available window",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "name": "maxExcludePinnedTabs",
+      "title": "Exclude pinned tabs",
+      "type": "bool",
+      "value": false
     }
   ],
   "permissions": {
