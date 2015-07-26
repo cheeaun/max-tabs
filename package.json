@@ -22,6 +22,7 @@
     {
       "name": "maxOpenInNextWindow",
       "title": "Open in next available window",
+      "description": "Open in next available window, if the current one is full",
       "type": "bool",
       "value": false
     },
