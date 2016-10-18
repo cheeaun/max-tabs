@@ -13,6 +13,7 @@ exports.main = function(){
 	var maxTabs = simplePrefs.prefs.maxTabs;
 	var max = (maxTabs > 1) ? maxTabs : 10; // Max at least 2 tabs please
 	var maxPrivateBrowsing = simplePrefs.prefs.maxPrivateBrowsing;
+	var showNotification = simplePrefs.prefs.showNotification;
 
 	var button = ActionButton({
 		id: 'max-tabs-button',
@@ -45,6 +46,9 @@ exports.main = function(){
 	simplePrefs.on('maxPrivateBrowsing', function(){
 		maxPrivateBrowsing = simplePrefs.prefs.maxPrivateBrowsing;
 	});
+	simplePrefs.on('showNotification', function(){
+		showNotification = simplePrefs.prefs.showNotification;
+	});
 
 	tabs.on('open', function(tab){
 		var window = tab.window;
@@ -55,10 +59,12 @@ exports.main = function(){
 				updateButton(window, tabsLen);
 			} else {
 				tab.close();
-				notifications.notify({
-					title: title,
-					text: _('not_open_max_tabs', max)
-				});
+				if(showNotification) {
+					notifications.notify({
+						title: title,
+						text: _('not_open_max_tabs', max)
+					});
+				}
 			}
 		}, 1);
 	});

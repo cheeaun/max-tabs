@@ -18,6 +18,12 @@
       "title": "Works for Private Browsing",
       "type": "bool",
       "value": true
+    },
+    {
+      "name": "showNotification",
+      "title": "Show notification when you reach the max",
+      "type": "bool",
+      "value": true
     }
   ],
   "permissions": {
