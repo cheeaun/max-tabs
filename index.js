@@ -8,11 +8,16 @@ var notifications = require('sdk/notifications');
 var { setTimeout } = require('sdk/timers');
 var privateBrowsing = require('sdk/private-browsing');
 var chroma = require('chroma-js');
+var minBy = require('lodash.minby');
 
 exports.main = function(){
 	var maxTabs = simplePrefs.prefs.maxTabs;
 	var max = (maxTabs > 1) ? maxTabs : 10; // Max at least 2 tabs please
 	var maxPrivateBrowsing = simplePrefs.prefs.maxPrivateBrowsing;
+	var tabCloseMode = simplePrefs.prefs.tabCloseMode;
+
+	var tabUsedCounts = new WeakMap();
+	var tabLastUsed = new WeakMap();
 
 	var button = ActionButton({
 		id: 'max-tabs-button',
@@ -22,6 +27,7 @@ exports.main = function(){
 	});
 
 	var colorScale = chroma.scale(['#A6A6A6', '#B90000']);
+
 	var updateButton = function(win, tabsLen){
 		if (win == 'window') tabsLen = windows.browserWindows.activeWindow.tabs.length;
 		button.state(win, {
@@ -30,11 +36,13 @@ exports.main = function(){
 			badgeColor: colorScale(tabsLen/max).hex()
 		});
 	};
+
 	var updateAllButtons = function(){
 		for (let window of windows.browserWindows){
 			updateButton(window, window.tabs.length);
 		}
 	};
+
 	updateAllButtons();
 
 	simplePrefs.on('maxTabs', function(){
@@ -42,19 +50,61 @@ exports.main = function(){
 		max = (maxTabs > 1) ? maxTabs : 10;
 		updateAllButtons();
 	});
+
 	simplePrefs.on('maxPrivateBrowsing', function(){
 		maxPrivateBrowsing = simplePrefs.prefs.maxPrivateBrowsing;
 	});
 
+	simplePrefs.on('tabCloseMode', function(){
+		tabCloseMode = simplePrefs.prefs.tabCloseMode;
+	});
+
+	tabs.on('activate', function(tab){
+		tabUsedCounts.set(tab, tabUsedCounts.get(tab) + 1);
+		tabLastUsed.set(tab, Date.now());
+	});
+
+	tabs.on('close', function(tab){
+		tabUsedCounts.delete(tab);
+		tabLastUsed.delete(tab);
+		updateAllButtons();
+	})
+
 	tabs.on('open', function(tab){
 		var window = tab.window;
+
+		tabUsedCounts.set(tab, 1);
+		tabLastUsed.set(tab, Date.now());
+
 		// setTimeout is needed because window.tabs.length value seems to update *slower*
 		setTimeout(function(){
 			var tabsLen = window.tabs.length;
+
 			if (tabsLen <= max || (privateBrowsing.isPrivate(window) && !maxPrivateBrowsing)){
 				updateButton(window, tabsLen);
 			} else {
-				tab.close();
+				var tabToClose;
+
+				switch(tabCloseMode){
+					case 0: {
+						tabToClose = tab;
+						break;
+					}
+					case 1: {
+						tabToClose = minBy(window.tabs, function(tab){
+							return tabUsedCounts.get(tab);
+						});
+						break;
+					}
+					case 2: {
+						tabToClose = minBy(window.tabs, function(tab){
+							return tabLastUsed.get(tab);
+						});
+						break;
+					}
+				}
+
+				tabToClose.close();
 				notifications.notify({
 					title: title,
 					text: _('not_open_max_tabs', max)
@@ -62,13 +112,4 @@ exports.main = function(){
 			}
 		}, 1);
 	});
-
-	var updateOnClose = function(tab){
-		var window = tab.window;
-		setTimeout(function(){
-			updateButton(window, window.tabs.length);
-		}, 1);
-	};
-	tabs.on('close', updateOnClose);
-	tabs.on('activate', updateOnClose);
 };

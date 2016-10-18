@@ -18,6 +18,17 @@
       "title": "Works for Private Browsing",
       "type": "bool",
       "value": true
+    },
+    {
+      "name": "tabCloseMode",
+      "title": "Which tab to close",
+      "type": "menulist",
+      "value": 0,
+      "options": [
+        {"label": "Last opened", "value": 0},
+        {"label": "Least frequently used", "value": 1},
+        {"label": "Least recently used", "value": 2}
+      ]
     }
   ],
   "permissions": {
@@ -25,7 +36,8 @@
     "multiprocess": true
   },
   "dependencies": {
-    "chroma-js": "~0.7.4"
+    "chroma-js": "~0.7.4",
+    "lodash.minby": "~4.6.0"
   },
   "devDependencies": {
     "jpm": "~1.0.0"
