@@ -91,14 +91,18 @@ exports.main = function(){
 						break;
 					}
 					case 1: {
-						tabToClose = minBy(window.tabs, function(tab){
-							return tabUsedCounts.get(tab);
+						tabToClose = minBy(window.tabs, function(otherTab){
+							if(tab === otherTab) {
+								return Infinity;
+							}
+
+							return tabUsedCounts.get(otherTab);
 						});
 						break;
 					}
 					case 2: {
-						tabToClose = minBy(window.tabs, function(tab){
-							return tabLastUsed.get(tab);
+						tabToClose = minBy(window.tabs, function(otherTab){
+							return tabLastUsed.get(otherTab);
 						});
 						break;
 					}
