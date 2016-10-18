@@ -92,7 +92,7 @@ exports.main = function(){
 					}
 					case 1: {
 						tabToClose = minBy(window.tabs, function(otherTab){
-							if(tab === otherTab) {
+							if(tab.id === otherTab.id) {
 								return Infinity;
 							}
 
